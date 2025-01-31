@@ -3,8 +3,9 @@ package base
 import (
 	"context"
 	"encoding/json"
-	"github.com/go-redis/redis/v8"
 	"time"
+
+	"github.com/go-redis/redis/v8"
 )
 
 type redisHandler struct {
@@ -38,7 +39,7 @@ func (h *redisHandler) Set(key string, value interface{}, expiration time.Durati
 	return client.Set(context.Background(), key, p, expiration).Err()
 }
 
-func (h *redisHandler) Get(key string, dest interface{}) error {
+func (h *redisHandler) Get(key string, dest interface{}) (err error) {
 	client, err := RedisHandler.GetClient()
 	defer func() {
 		e := client.Close()
